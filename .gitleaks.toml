@@ -1,0 +1,22 @@
+title = "infection_protocol gitleaks config"
+
+[extend]
+useDefault = true
+
+[[allowlists]]
+description = "Allowlist para falsos positivos controlados"
+paths = [
+  '''android/key.properties.example''',
+]
+
+[[rules]]
+id = "android-keystore-password"
+description = "Detecta passwords de keystore Android"
+regex = '''(?i)(storePassword|keyPassword)\s*=\s*[^\s#]{8,}'''
+tags = ["android", "keystore", "password"]
+
+[[rules]]
+id = "generic-high-entropy-assignment"
+description = "Detecta asignaciones de secretos comunes"
+regex = '''(?i)(secret|token|api[_-]?key|password)\s*[:=]\s*['\"]?[A-Za-z0-9_\-]{16,}['\"]?'''
+tags = ["key", "token", "password"]

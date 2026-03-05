@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+
+powershell -NoProfile -ExecutionPolicy Bypass -File "./scripts/security_prepush.ps1"
+status=$?
+if [ $status -ne 0 ]; then
+  echo "Pre-push security checks failed. Push bloqueado."
+  exit $status
+fi
+
+exit 0

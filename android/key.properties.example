@@ -1,0 +1,6 @@
+# Copia este archivo a android/key.properties (NO lo subas a git)
+# y reemplaza los valores por los reales de tu keystore local.
+storePassword=REEMPLAZAR_STORE_PASSWORD
+keyPassword=REEMPLAZAR_KEY_PASSWORD
+keyAlias=upload
+storeFile=app/upload-keystore.jks
