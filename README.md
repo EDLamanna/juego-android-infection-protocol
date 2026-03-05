@@ -1,8 +1,3 @@
-# Infection Protocol
-
-[![CI](https://github.com/EDLamanna/juego-android-infection-protocol/actions/workflows/ci.yml/badge.svg)](https://github.com/EDLamanna/juego-android-infection-protocol/actions/workflows/ci.yml)
-[![Security](https://github.com/EDLamanna/juego-android-infection-protocol/actions/workflows/security.yml/badge.svg)](https://github.com/EDLamanna/juego-android-infection-protocol/actions/workflows/security.yml)
-
 Infection Protocol es un party game de deducción social para Android, diseñado para hacer partidas presenciales más fluidas, inmersivas y memorables.
 
 ## Intro
