@@ -13,6 +13,7 @@ paths = [
 id = "android-keystore-password"
 description = "Detecta passwords de keystore Android"
 regex = '''(?i)(storePassword|keyPassword)\s*=\s*[^\s#]{8,}'''
+path = '''(?i)key\.properties$'''
 tags = ["android", "keystore", "password"]
 
 [[rules]]
