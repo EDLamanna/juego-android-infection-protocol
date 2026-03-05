@@ -41,6 +41,7 @@ android/app/*.keystore
 # Local runtime captures
 log_hot_capture.txt
 *.log
+.gitleaks-report.json
 
 # Local editor/runtime metadata
 .metadata
