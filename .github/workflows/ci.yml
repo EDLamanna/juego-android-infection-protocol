@@ -26,8 +26,10 @@ jobs:
             echo "ERROR: android/key.properties está versionado. Debe permanecer fuera de git."
             exit 1
           fi
-          if git ls-files "*.jks" "*.keystore" >/dev/null 2>&1; then
+          tracked_keystores=$(git ls-files | grep -E '\.(jks|keystore)$' || true)
+          if [ -n "$tracked_keystores" ]; then
             echo "ERROR: Se detectó keystore versionado."
+            echo "$tracked_keystores"
             exit 1
           fi
 
