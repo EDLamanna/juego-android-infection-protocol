@@ -1,124 +1,87 @@
 # Infection Protocol
 
-Party game offline de deducción social para Android en dispositivo rotativo.
+[![CI](https://github.com/EDLamanna/juego-android-infection-protocol/actions/workflows/ci.yml/badge.svg)](https://github.com/EDLamanna/juego-android-infection-protocol/actions/workflows/ci.yml)
+[![Security](https://github.com/EDLamanna/juego-android-infection-protocol/actions/workflows/security.yml/badge.svg)](https://github.com/EDLamanna/juego-android-infection-protocol/actions/workflows/security.yml)
 
-## Arquitectura actual
+Infection Protocol es un party game de deducción social para Android, diseñado para hacer partidas presenciales más fluidas, inmersivas y memorables.
 
-- `domain`: motor determinista, modelos y reglas de juego.
-- `flow`: orquestación de turnos/fases (`TurnFlowController`).
-- `security`: anti-spoiler en rotación de dispositivo (`AntiSpoilerSystem`).
-- `ui`: pantallas consumiendo turnos del motor sin lógica de reglas.
+## Intro
 
-Flujo implementado:
+Infection Protocol convierte un teléfono en árbitro inteligente de juego de mesa: organiza fases, protege información privada entre jugadores y aumenta la tensión narrativa con audio y ritmo de partida.
 
-`BOOT -> SETUP -> TRANSFER -> ROLE_REVEAL -> NIGHT_ACTION / INFECTED_CONSENSUS -> DAY_DISCUSSION -> VOTING -> VOTE_RESOLUTION -> CHECK_WIN -> GAME_END`
+## Descripción del juego
 
-## Multimedia del frontend
+En cada ronda, el grupo debe descubrir quién está infectado antes de que sea demasiado tarde. Cada rol dispone de información parcial y habilidades únicas, por lo que cada decisión modifica el rumbo de la partida.
 
-Estado actual del frontend:
+El valor central está en la experiencia social: sospecha, alianzas, engaño y giros inesperados en una sesión rápida de aprender y difícil de dominar.
 
-- Imágenes de roles: presentes en `assets/images/roles`
-- Sonidos de eventos requeridos: presentes en `assets/audio`
-	- `vote_cast.wav`
-	- `night_kill.wav`
-	- `sabotage.wav`
-	- `timer_warning.wav`
-	- `victory.wav`
+## Modo de juego (apoyo al juego de mesa)
 
-Los audios ya están declarados en `pubspec.yaml` para empaquetado.
+Infection Protocol está construido como apoyo digital para juego presencial:
 
-## Firma release Android
+- Se juega cara a cara, en grupo.
+- El dispositivo guía fases y reduce errores de reglas.
+- El teléfono rota entre jugadores para mantener secretos.
+- El flujo digital minimiza tiempos muertos y acelera el cierre de ronda.
 
-Configurado:
+## Características clave
 
-- Firma release soportada con credenciales locales no versionadas.
-- Plantilla local: `android/key.properties.example`.
-- Build release endurecido para evitar fallback inseguro.
+- Balance automático según número de jugadores.
+- Flujo guiado por fases (revelación, noche, discusión, votación y cierre).
+- Sistema anti-spoiler para proteger roles e información privada.
+- Feedback audiovisual para aumentar inmersión y tensión.
+- Rejugabilidad alta por combinaciones de roles y decisiones sociales.
 
-> Seguridad: ya no hay fallback a firma `debug` para `release`.
+## Propuesta de valor comercial
 
-## Requisitos
+- Mejora la experiencia social sin reemplazar la esencia del juego de mesa.
+- Reduce fricción operativa (reglas, tiempos, orden de turnos).
+- Aumenta la retención de jugadores gracias al ritmo narrativo.
 
-- Flutter SDK 3.22+ (incluye Dart)
-- Android SDK + `platform-tools`
-- JDK 17
+## Tracción y estado actual
 
-## Comandos (Windows PowerShell)
+- MVP funcional para partidas presenciales con dispositivo rotativo.
+- Base técnica estable con tests de dominio, flujo y seguridad.
+- Pipeline de calidad y seguridad automatizado en GitHub Actions.
+
+## Métricas sugeridas (para recruiting/investment)
+
+Cuando tengas sesiones de prueba, agrega aquí:
+
+- Tiempo promedio por partida.
+- Tasa de finalización de partidas.
+- Tamaño de grupo más frecuente.
+- NPS o satisfacción de jugadores.
+
+## Público objetivo
+
+- Grupos que disfrutan deducción social, bluff y estrategia.
+- Organizadores de dinámicas, reuniones y game nights.
+- Comunidades de juegos de mesa que buscan soporte digital moderno.
+
+## Demo
+
+- Video demo: pendiente de publicación.
+- APK de prueba: usar sección Releases del repositorio.
+
+## Quick start técnico
 
 ```powershell
-# 1) Obtener dependencias
 flutter pub get
-
-# 2) Ejecutar tests del core (TDD)
-flutter test
-
-# 3) Ejecutar app en debug
 flutter run
-
-# 4) Build APK release instalable
-flutter build apk --release
-
-# 5) Build AAB release (Play Store)
-flutter build appbundle --release
-
-# 6) Build release endurecido (recomendado)
-flutter build appbundle --release --obfuscate --split-debug-info=build/symbols
 ```
 
-APK esperado:
+## Roadmap y brief de inversión
 
-`build\app\outputs\flutter-apk\app-release.apk`
+- Roadmap: [ROADMAP.md](ROADMAP.md)
+- One pager producto/inversión: [INVESTOR_ONE_PAGER.md](INVESTOR_ONE_PAGER.md)
 
-AAB esperado:
+## Seguridad y cumplimiento
 
-`build\app\outputs\bundle\release\app-release.aab`
+- Política de seguridad: [SECURITY.md](SECURITY.md)
 
-## Seguridad antes de publicar en GitHub
+## Licencia
 
-Checklist mínimo:
+MIT (ver [LICENSE](LICENSE)).
 
-- Confirmar que **NO** se suben:
-	- `android/key.properties`
-	- `*.jks` / `*.keystore`
-	- `log_hot_capture.txt` y `*.log`
-- Ejecutar localmente:
-	- `flutter analyze`
-	- `flutter test`
-
-Automatizaciones incluidas en el repo:
-
-- CI: `.github/workflows/ci.yml`
-- Security scan: `.github/workflows/security.yml`
-- Dependabot: `.github/dependabot.yml`
-- Política: `SECURITY.md`
-
-## Automatización local pre-push
-
-Scripts incluidos:
-
-- `scripts/security_prepush.ps1`: ejecuta checks de seguridad antes de push.
-- `scripts/install_git_hooks.ps1`: instala hook git local (`pre-push`).
-
-Uso:
-
-```powershell
-# instala hook local (una sola vez)
-powershell -ExecutionPolicy Bypass -File .\scripts\install_git_hooks.ps1
-
-# ejecutar checks manualmente
-powershell -ExecutionPolicy Bypass -File .\scripts\security_prepush.ps1
-
-# modo estricto (falla si falta gitleaks)
-powershell -ExecutionPolicy Bypass -File .\scripts\security_prepush.ps1 -Strict
-```
-
-## Comando único de publicación segura
-
-```powershell
-# prepara repo seguro local (init git si falta, hooks, checks estrictos)
-powershell -ExecutionPolicy Bypass -File .\scripts\safe_publish.ps1
-
-# prepara + configura remoto + hace push seguro
-powershell -ExecutionPolicy Bypass -File .\scripts\safe_publish.ps1 -RemoteUrl <URL_REPO> -Push
-```
 
